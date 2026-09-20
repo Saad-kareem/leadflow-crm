@@ -1,0 +1,215 @@
+/**
+ * Front-end form styles.
+ *
+ * Scoped under .leadflow-form and built on custom properties, so a theme can
+ * re-skin the form by redefining a handful of variables rather than fighting
+ * specificity. Nothing here styles a bare element selector, because this CSS
+ * loads on someone else's site.
+ */
+
+.leadflow-form {
+	--lf-accent: #2f5bea;
+	--lf-accent-hover: #2647bb;
+	--lf-text: #14181f;
+	--lf-muted: #5b6472;
+	--lf-border: #d8dde5;
+	--lf-border-strong: #b6bfcd;
+	--lf-surface: #ffffff;
+	--lf-danger: #b42318;
+	--lf-success: #0a7c5a;
+	--lf-radius: 8px;
+	--lf-gap: 20px;
+
+	max-width: 720px;
+	margin: 0 auto;
+	color: var(--lf-text);
+	font-size: 16px;
+	line-height: 1.55;
+}
+
+.leadflow-form *,
+.leadflow-form *::before,
+.leadflow-form *::after {
+	box-sizing: border-box;
+}
+
+.leadflow-form__title {
+	margin: 0 0 6px;
+	font-size: 1.5rem;
+	line-height: 1.25;
+}
+
+.leadflow-form__description {
+	margin: 0 0 24px;
+	color: var(--lf-muted);
+}
+
+.leadflow-form__notice {
+	margin: 0 0 20px;
+	padding: 12px 14px;
+	border: 1px solid var(--lf-border);
+	border-left-width: 3px;
+	border-radius: var(--lf-radius);
+	background: #f6f8fb;
+	font-size: 0.9375rem;
+}
+
+.leadflow-form__notice.is-success {
+	border-left-color: var(--lf-success);
+	background: #eefaf5;
+	color: #08533d;
+}
+
+.leadflow-form__notice.is-error {
+	border-left-color: var(--lf-danger);
+	background: #fdf3f2;
+	color: #8a1c14;
+}
+
+.leadflow-form__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--lf-gap);
+}
+
+.leadflow-field--full {
+	grid-column: 1 / -1;
+}
+
+.leadflow-field__label {
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	margin-bottom: 6px;
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.leadflow-field__required {
+	color: var(--lf-danger);
+}
+
+.leadflow-field__optional {
+	color: var(--lf-muted);
+	font-weight: 400;
+	font-size: 0.8125rem;
+}
+
+.leadflow-field__input {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid var(--lf-border);
+	border-radius: var(--lf-radius);
+	background: var(--lf-surface);
+	color: inherit;
+	font: inherit;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.leadflow-field__input:hover {
+	border-color: var(--lf-border-strong);
+}
+
+/* A visible focus ring, not just a colour change — this is the only cue a
+   keyboard user gets about where they are. */
+.leadflow-field__input:focus {
+	outline: none;
+	border-color: var(--lf-accent);
+	box-shadow: 0 0 0 3px rgba(47, 91, 234, 0.18);
+}
+
+.leadflow-field__input.has-error {
+	border-color: var(--lf-danger);
+}
+
+.leadflow-field__input.has-error:focus {
+	box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.16);
+}
+
+.leadflow-field__textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+.leadflow-field__hint,
+.leadflow-field__error {
+	margin: 6px 0 0;
+	font-size: 0.8125rem;
+}
+
+.leadflow-field__hint {
+	color: var(--lf-muted);
+}
+
+.leadflow-field__error {
+	color: var(--lf-danger);
+}
+
+.leadflow-field__error:empty {
+	display: none;
+}
+
+.leadflow-form__actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-top: 24px;
+}
+
+.leadflow-button {
+	padding: 11px 22px;
+	border: 1px solid transparent;
+	border-radius: var(--lf-radius);
+	background: var(--lf-accent);
+	color: #fff;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+.leadflow-button:hover:not(:disabled) {
+	background: var(--lf-accent-hover);
+}
+
+.leadflow-button:focus-visible {
+	outline: 2px solid var(--lf-accent);
+	outline-offset: 2px;
+}
+
+.leadflow-button:disabled {
+	opacity: 0.65;
+	cursor: progress;
+}
+
+.leadflow-form__privacy {
+	margin: 0;
+	color: var(--lf-muted);
+	font-size: 0.8125rem;
+}
+
+/* Hidden from people but still in the accessibility tree's reach for bots,
+   which is exactly the point of a honeypot. `display: none` is avoided because
+   some bots skip those fields. */
+.leadflow-form__hp {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+@media (max-width: 640px) {
+	.leadflow-form__grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.leadflow-button {
+		width: 100%;
+	}
+}

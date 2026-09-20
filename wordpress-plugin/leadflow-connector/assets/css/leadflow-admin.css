@@ -1,0 +1,72 @@
+/**
+ * Admin styles.
+ *
+ * Deliberately small: wp-admin already has a design system, and a plugin that
+ * ignores it looks like a plugin. This only adds what core has no equivalent
+ * for — the sync status pills and the score cell.
+ */
+
+.leadflow-admin .leadflow-pill {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.6;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+/* Each status carries a colour *and* its own word, so the table still reads
+   correctly in greyscale or for someone who cannot distinguish them. */
+.leadflow-admin .leadflow-pill--synced {
+	border-color: #a7d7c5;
+	background: #edf9f4;
+	color: #0a6b4d;
+}
+
+.leadflow-admin .leadflow-pill--duplicate {
+	border-color: #c9d3e0;
+	background: #f2f5f9;
+	color: #46536b;
+}
+
+.leadflow-admin .leadflow-pill--failed {
+	border-color: #eab9b4;
+	background: #fdf1f0;
+	color: #96231a;
+}
+
+.leadflow-admin .leadflow-pill--pending {
+	border-color: #e5d2a8;
+	background: #fdf8ec;
+	color: #7a5c14;
+}
+
+.leadflow-admin .leadflow-pill--skipped {
+	border-color: #d8dde5;
+	background: #f6f7f9;
+	color: #5b6472;
+}
+
+.leadflow-admin .leadflow-score strong {
+	font-size: 14px;
+}
+
+.leadflow-admin .leadflow-muted {
+	color: #6b7280;
+}
+
+.leadflow-admin .column-score,
+.leadflow-admin .column-budget {
+	width: 130px;
+}
+
+.leadflow-admin .column-sync_status {
+	width: 230px;
+}
+
+.leadflow-admin .column-created_at {
+	width: 140px;
+}

@@ -39,10 +39,19 @@ const message = trimmed.max(5000, 'Please keep the message under 5000 characters
 /** Shared by manual creation and the WordPress intake. */
 const leadFields = { name, email, phone, service, budget, message };
 
+/**
+ * ISO-8601 with an explicit offset allowed, not just a `Z`.
+ *
+ * `gmdate('c')` in PHP produces `+00:00` rather than `Z`, and both are valid
+ * ISO-8601. Rejecting one of them would make the contract depend on which
+ * language happened to format the timestamp.
+ */
+const isoDateTime = (message) => z.iso.datetime({ offset: true, message });
+
 export const createLeadSchema = z.object({
   ...leadFields,
   status: z.enum(LEAD_STATUS_VALUES).optional(),
-  followUpAt: z.iso.datetime({ message: 'Follow-up must be a valid date' }).nullish(),
+  followUpAt: isoDateTime('Follow-up must be a valid date').nullish(),
 });
 
 export const wordpressLeadSchema = z.object({
@@ -51,7 +60,7 @@ export const wordpressLeadSchema = z.object({
   wordpressId: z.coerce.number().int().positive().nullish(),
   siteUrl: trimmed.max(300).optional().default(''),
   pageUrl: trimmed.max(500).optional().default(''),
-  submittedAt: z.iso.datetime().nullish(),
+  submittedAt: isoDateTime('submittedAt must be a valid date').nullish(),
 });
 
 /**
@@ -71,7 +80,7 @@ export const updateLeadSchema = z
     budget: budget.optional(),
     message: trimmed.max(5000, 'Please keep the message under 5000 characters').optional(),
     status: z.enum(LEAD_STATUS_VALUES, { message: 'That is not a valid status' }).optional(),
-    followUpAt: z.iso.datetime({ message: 'Follow-up must be a valid date' }).nullish(),
+    followUpAt: isoDateTime('Follow-up must be a valid date').nullish(),
   })
   .refine((body) => Object.keys(body).length > 0, { message: 'Nothing to update' });
 
