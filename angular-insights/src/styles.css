@@ -1,0 +1,6 @@
+/* Global reset only — the insights view styles itself, component-scoped. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

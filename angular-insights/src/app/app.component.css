@@ -1,0 +1,500 @@
+/**
+ * Styles for the insights page.
+ *
+ * The same tokens as the React dashboard, so the two views look like one
+ * product rather than two projects. Component-scoped by Angular, so nothing
+ * here needs defensive selectors.
+ */
+
+:host {
+  --canvas: #f6f7f9;
+  --surface: #ffffff;
+  --line: #e6e8ec;
+  --line-strong: #d3d7de;
+  --ink: #101828;
+  --ink-soft: #475467;
+  --ink-muted: #737d8c;
+  --brand: #2f5bea;
+  --brand-600: #2449c4;
+  --danger-bg: #fdf3f2;
+  --danger-fg: #98231a;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+
+  display: block;
+  min-height: 100dvh;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+}
+
+.mark svg {
+  width: 18px;
+  height: 18px;
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+}
+
+.page-head {
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+.page-head .muted {
+  margin: 4px 0 0;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* Spacing between the page's top-level blocks only. Without the child
+   combinator this also targets the cards *inside* .grid, which pushes the
+   second and third stat card down and breaks their alignment. */
+.content > .card + .card,
+.content > .grid + .card,
+.content > .card + .grid {
+  margin-top: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* ---- Stats ---------------------------------------------------------- */
+
+.stat-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.stat-value {
+  margin: 8px 0 0;
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Bars ----------------------------------------------------------- */
+
+.bars {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bars li + li {
+  margin-top: 14px;
+}
+
+.bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.bar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.bar-value {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.bar-track,
+.score-track {
+  display: block;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.bar-fill,
+.score-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* ---- Status colours -------------------------------------------------- */
+/* A dot and the status word together, never colour on its own. */
+
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-new,
+.fill-new {
+  background: #2f5bea;
+}
+
+.dot-contacted,
+.fill-contacted {
+  background: #d98918;
+}
+
+.dot-qualified,
+.fill-qualified {
+  background: #7c5cf0;
+}
+
+.dot-won,
+.fill-won {
+  background: #0f9d6e;
+}
+
+.dot-lost,
+.fill-lost {
+  background: #98a2b3;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-new {
+  background: #eef3ff;
+  color: #1e3c9f;
+}
+
+.badge-contacted {
+  background: #fff6e9;
+  color: #8a5406;
+}
+
+.badge-qualified {
+  background: #f2effd;
+  color: #4b2fa4;
+}
+
+.badge-won {
+  background: #e8f7f1;
+  color: #06553c;
+}
+
+.badge-lost {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* Score bands read as a temperature ramp, cold to hot. */
+.band-cold {
+  background: #98a2b3;
+}
+
+.band-cool {
+  background: #5b8def;
+}
+
+.band-warm {
+  background: #d98918;
+}
+
+.band-hot {
+  background: #d9481a;
+}
+
+/* ---- Table ----------------------------------------------------------- */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  padding: 8px 12px 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.lead-name {
+  display: block;
+  font-weight: 500;
+}
+
+.lead-email {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.score {
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.score .muted {
+  font-size: 12px;
+}
+
+.score-track {
+  margin-top: 5px;
+  width: 88px;
+  height: 5px;
+}
+
+/* ---- Forms and buttons ----------------------------------------------- */
+
+.sign-in {
+  max-width: 400px;
+  margin: 48px auto 0;
+}
+
+.sign-in h1 {
+  font-size: 18px;
+}
+
+.sign-in .muted {
+  margin: 6px 0 0;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 9px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  font: inherit;
+  color: inherit;
+}
+
+input:focus {
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 91, 234, 0.18);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: #fafbfc;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  width: 100%;
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-600);
+}
+
+/* A visible focus ring is the only cue a keyboard user gets. */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.alert {
+  margin: 16px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  font-size: 14px;
+}
+
+.state {
+  text-align: center;
+}
+
+.state .btn-primary {
+  width: auto;
+  margin-top: 14px;
+  padding-inline: 18px;
+}
+
+/* ---- Skeletons -------------------------------------------------------- */
+
+.skeleton {
+  border-radius: 4px;
+  background: var(--line);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.skeleton-label {
+  width: 80px;
+  height: 12px;
+}
+
+.skeleton-value {
+  width: 48px;
+  height: 26px;
+  margin-top: 10px;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .content,
+  .topbar {
+    padding-inline: 16px;
+  }
+}
