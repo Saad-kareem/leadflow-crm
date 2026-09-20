@@ -1,59 +1,29 @@
-# AngularInsights
+# Lead Insights (Part D)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.27.
-
-## Development server
-
-To start a local development server, run:
+A single standalone Angular component showing a read-only summary of the CRM
+pipeline: total leads, counts by status, and the top five leads by score.
 
 ```bash
-ng serve
+npm install
+npm start      # http://localhost:4200
+npm run build
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+It needs the API running on `http://localhost:4000` (see `../api`) and signs in
+with the same admin account as the React dashboard.
 
-## Code scaffolding
+Authentication is the simplified version the brief allows: the same
+`POST /api/auth/login` endpoint, with the JWT held in `sessionStorage` for the
+tab's lifetime. Setup, architecture and the reasoning behind the rest of the
+system are in the [root README](../README.md).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Files
 
-```bash
-ng generate component component-name
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+src/app/
+  leadflow.ts            types for the slice of the API this page reads
+  leadflow.service.ts    HttpClient wrapper: sign in, summary, meta
+  app.component.ts       state as signals, status rows derived with computed()
+  app.component.html     built-in control flow (@if / @for)
+  app.component.css      component-scoped, sharing the dashboard's tokens
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
