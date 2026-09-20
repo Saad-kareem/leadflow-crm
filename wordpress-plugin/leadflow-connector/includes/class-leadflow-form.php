@@ -58,6 +58,26 @@ class LeadFlow_Form {
 			LEADFLOW_VERSION,
 			true
 		);
+
+		/**
+		 * Attached here, at registration, rather than when the shortcode
+		 * renders. A shortcode runs during `the_content`, which is late enough
+		 * that the localized data never reaches the page — the script then
+		 * loads, finds no `leadflowForm` global and quietly does nothing,
+		 * leaving the form to fall back to a full page reload.
+		 */
+		wp_localize_script(
+			'leadflow-form',
+			'leadflowForm',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'action'  => self::ACTION,
+				'strings' => array(
+					'sending' => __( 'Sending…', 'leadflow-connector' ),
+					'network' => __( 'We could not send your enquiry just now. Please try again.', 'leadflow-connector' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -77,20 +97,10 @@ class LeadFlow_Form {
 			'leadflow_form'
 		);
 
+		// The assets carry their own data, so rendering only has to ask for
+		// them — a page without the shortcode still ships neither.
 		wp_enqueue_style( 'leadflow-form' );
 		wp_enqueue_script( 'leadflow-form' );
-		wp_localize_script(
-			'leadflow-form',
-			'leadflowForm',
-			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'action'  => self::ACTION,
-				'strings' => array(
-					'sending' => __( 'Sending…', 'leadflow-connector' ),
-					'network' => __( 'We could not send your enquiry just now. Please try again.', 'leadflow-connector' ),
-				),
-			)
-		);
 
 		$result = self::consume_result();
 		$values = $result && ! empty( $result['values'] ) ? $result['values'] : array();
