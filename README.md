@@ -78,13 +78,17 @@ Set `ADMIN_PASSWORD` too, then:
 
 ```bash
 npm install
-npm run seed -- --with-leads   # admin account + 10 demo leads
+npm run seed                   # creates the admin account
 npm run dev                    # http://localhost:4000
 npm test                       # 21 unit tests, no database needed
 ```
 
-`npm run seed` on its own creates only the admin account.
-Add `--reset` to clear existing leads first.
+Only the admin account is seeded. Leads are not — they arrive through the
+WordPress form or are added by hand in the dashboard, so everything in the CRM
+has been through the real validation and scoring path rather than being
+inserted as a fixture.
+
+Add `--reset` to clear every existing lead before seeding.
 
 ### Environment variables
 
