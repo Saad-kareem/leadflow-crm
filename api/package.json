@@ -1,0 +1,29 @@
+{
+  "name": "leadflow-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LeadFlow Mini CRM — REST API (Express + MongoDB)",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/scripts/seed.js",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.0.0",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.0",
+    "morgan": "^1.10.1",
+    "zod": "^4.0.0"
+  }
+}
