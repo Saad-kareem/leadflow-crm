@@ -1,0 +1,196 @@
+@import 'tailwindcss';
+
+/**
+ * The design system.
+ *
+ * Every colour, radius and shadow used anywhere in the dashboard is declared
+ * here as a token, and components reference the tokens. Nothing hard-codes a
+ * hex value, so the whole product re-skins from this one block.
+ *
+ * The palette is deliberately small: a neutral canvas, white surfaces, one
+ * brand colour for primary actions, and a tightly controlled set of semantic
+ * tints for status. A CRM is a tool people stare at all day — colour has to
+ * mean something when it appears, which it cannot do if it is everywhere.
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Neutrals: the structure of every screen. */
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #fafbfc;
+  --color-line: #e6e8ec;
+  --color-line-strong: #d3d7de;
+  --color-ink: #101828;
+  --color-ink-soft: #475467;
+  --color-ink-muted: #737d8c;
+
+  /* Brand: primary actions, active navigation, focus rings. Nothing else. */
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dce6ff;
+  --color-brand-200: #bccfff;
+  --color-brand-500: #2f5bea;
+  --color-brand-600: #2449c4;
+  --color-brand-700: #1e3c9f;
+
+  /* Status tints. Each has a soft background, a readable text colour and a
+     saturated dot, so a badge reads at a glance and still passes contrast. */
+  --color-new-bg: #eef3ff;
+  --color-new-fg: #1e3c9f;
+  --color-new-dot: #2f5bea;
+
+  --color-contacted-bg: #fff6e9;
+  --color-contacted-fg: #8a5406;
+  --color-contacted-dot: #d98918;
+
+  --color-qualified-bg: #f2effd;
+  --color-qualified-fg: #4b2fa4;
+  --color-qualified-dot: #7c5cf0;
+
+  --color-won-bg: #e8f7f1;
+  --color-won-fg: #06553c;
+  --color-won-dot: #0f9d6e;
+
+  --color-lost-bg: #f3f4f6;
+  --color-lost-fg: #4b5563;
+  --color-lost-dot: #98a2b3;
+
+  /* Score bands read as a temperature ramp, cold to hot, so the colour itself
+     carries the ordering without anyone needing a legend. */
+  --color-band-cold: #98a2b3;
+  --color-band-cool: #5b8def;
+  --color-band-warm: #d98918;
+  --color-band-hot: #d9481a;
+
+  --color-danger-bg: #fdf3f2;
+  --color-danger-fg: #98231a;
+  --color-danger-500: #c8372a;
+
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  --shadow-raised: 0 4px 12px rgba(16, 24, 40, 0.07), 0 1px 3px rgba(16, 24, 40, 0.05);
+  --shadow-overlay: 0 16px 40px rgba(16, 24, 40, 0.16);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+  }
+
+  /* One focus style for the whole app. Visible, consistent, and never removed
+     — it is the only thing telling a keyboard user where they are. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/**
+ * The shared button shape, declared as a utility rather than a plain class so
+ * the variants below can `@apply` it — Tailwind can only apply real utilities.
+ */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md border text-sm font-medium
+         px-3.5 py-2 transition-colors select-none
+         disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+@layer components {
+  /* ---- Surfaces ------------------------------------------------------- */
+  .card {
+    @apply bg-surface border border-line rounded-lg shadow-card;
+  }
+
+  /* ---- Buttons -------------------------------------------------------- */
+  .btn-primary {
+    @apply btn bg-brand-500 border-brand-500 text-white
+           hover:not-disabled:bg-brand-600 hover:not-disabled:border-brand-600;
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface border-line-strong text-ink
+           hover:not-disabled:bg-surface-sunken hover:not-disabled:border-ink-muted;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent border-transparent text-ink-soft
+           hover:not-disabled:bg-black/5 hover:not-disabled:text-ink;
+  }
+
+  .btn-danger {
+    @apply btn bg-surface border-line-strong text-danger-fg
+           hover:not-disabled:bg-danger-bg hover:not-disabled:border-danger-500;
+  }
+
+  /* ---- Form controls -------------------------------------------------- */
+  .field-label {
+    @apply block text-sm font-medium text-ink mb-1.5;
+  }
+
+  .field-control {
+    @apply w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-sm text-ink
+           placeholder:text-ink-muted transition-shadow
+           focus:border-brand-500 focus:outline-none focus:ring-3 focus:ring-brand-500/18
+           disabled:bg-surface-sunken disabled:text-ink-muted;
+  }
+
+  .field-control-error {
+    @apply border-danger-500 focus:border-danger-500 focus:ring-danger-500/16;
+  }
+
+  .field-hint {
+    @apply mt-1.5 text-xs text-ink-muted;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-xs text-danger-fg;
+  }
+
+  /* ---- Table ---------------------------------------------------------- */
+  .data-table {
+    @apply w-full border-collapse text-sm;
+  }
+
+  .data-table thead th {
+    @apply bg-surface-sunken border-b border-line px-4 py-2.5 text-left
+           text-xs font-semibold uppercase tracking-wide text-ink-muted whitespace-nowrap;
+  }
+
+  .data-table tbody td {
+    @apply border-b border-line px-4 py-3 align-middle;
+  }
+
+  .data-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* ---- Badges --------------------------------------------------------- */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium whitespace-nowrap;
+  }
+
+  .badge-dot {
+    @apply h-1.5 w-1.5 rounded-full shrink-0;
+  }
+}
+
+/* Respect a reader's preference. Nothing here is load-bearing animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

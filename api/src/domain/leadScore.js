@@ -1,5 +1,5 @@
 import { collapseWhitespace, hasCountryCode, isBusinessEmail, normalizePhone } from './normalize.js';
-import { scoreBandFor } from './constants.js';
+import { BUDGET_RANGES, SERVICES, scoreBandFor } from './constants.js';
 
 /**
  * Lead Score — 0 to 100.
@@ -91,19 +91,24 @@ const messageLengthPoints = (length) => {
  * @property {string} reason   plain-English explanation for the UI
  */
 
+/** Reasons are read by a person in the dashboard, so they use labels, not slugs. */
+const labelOf = (options, value) => options.find((option) => option.value === value)?.label ?? value;
+
 const budgetFactor = (lead) => {
   const points = BUDGET_POINTS[lead.budget] ?? 0;
   const reason = lead.budget
     ? lead.budget === 'not-sure'
       ? 'Budget not stated yet'
-      : `Budget range ${lead.budget}`
+      : `Budget of ${labelOf(BUDGET_RANGES, lead.budget)}`
     : 'No budget selected';
   return { key: 'budget', label: 'Budget', points, max: 35, reason };
 };
 
 const serviceFactor = (lead) => {
   const points = SERVICE_POINTS[lead.service] ?? 0;
-  const reason = lead.service ? `Enquiring about ${lead.service}` : 'No service selected';
+  const reason = lead.service
+    ? `Enquiring about ${labelOf(SERVICES, lead.service)}`
+    : 'No service selected';
   return { key: 'service', label: 'Service fit', points, max: 20, reason };
 };
 
